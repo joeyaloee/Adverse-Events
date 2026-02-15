@@ -844,7 +844,11 @@ def main_function(dataset, #the input dataset
         num_r = range(0, len(top_scores))
         t_r = len(top_scores)        
 
-        p_pool = multiprocessing.Pool(processes=num_p)
+        p_pool = multiprocessing.Pool(
+            processes=num_p,
+            initializer=_init_worker_ae,
+            initargs=(_AE_CTX["tox_map"], _AE_CTX["lambda"], _AE_CTX["index_to_name"])
+        )    
         p_input = list(zip(top_scores, repeat(on_target_prior), repeat(noise_variance), repeat(influence), num_r, repeat(t_r), repeat(curr_t), repeat(otit), repeat(R1), repeat(R2), repeat(single_or_multi), repeat(lower_lim), repeat(upper_lim), repeat(time_lim)))
         WE_JS_scores = p_pool.map(JS_WE, p_input)
         p_pool.close()
