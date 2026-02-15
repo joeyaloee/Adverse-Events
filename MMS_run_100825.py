@@ -164,7 +164,11 @@ if __name__ == "__main__":
 
 
     JS.set_ae_ctx(tox_map=tox_map, lam=lambda_ae, index_to_name=compound_names)
+
+    
     print('dataset loaded\n')
+    def _init_worker_ae(tox_map, lam, index_to_name):
+        set_ae_ctx(tox_map=tox_map, lam=lam, index_to_name=index_to_name)
     
     if len(sys.argv) > 1:
         print('Number of procs initiated: ' + str(sys.argv[1])+'\n')
