@@ -164,6 +164,13 @@ if __name__ == "__main__":
 
 
     JS.set_ae_ctx(tox_map=tox_map, lam=lambda_ae, index_to_name=compound_names)
+
+    def _init_worker_ae(tox_map, lam, index_to_name):
+    """
+    Ensures AE context exists inside each multiprocessing worker (critical on Windows spawn).
+    """
+        set_ae_ctx(tox_map=tox_map, lam=lam, index_to_name=index_to_name)
+
     print('dataset loaded\n')
     
     if len(sys.argv) > 1:
