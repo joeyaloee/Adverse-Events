@@ -791,7 +791,11 @@ def main_function(dataset, #the input dataset
         print('Total number of combinations: ' + str(len(combos)))
               
         curr_t = time.time()
-        p_pool = multiprocessing.Pool(processes=num_p)
+        p_pool = multiprocessing.Pool(
+            processes=num_p,
+            initializer=_init_worker_ae,
+            initargs=(_AE_CTX["tox_map"], _AE_CTX["lambda"], _AE_CTX["index_to_name"])
+        )
         num_r = range(0,len(combos))
         t_r = len(combos)
         p_input = list(zip(combos, repeat(on_target_prior), repeat(noise_variance), repeat(influence), num_r, repeat(t_r), repeat(curr_t), repeat(single_or_multi)))
